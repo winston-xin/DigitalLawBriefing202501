@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字简报 - 辽宁省律师协会数字法治与数字经济专业委员会</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 醒目标题和美化样式 */
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .hero-banner {
+            position: relative;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            padding: 120px 0 80px;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .hero-banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.1), transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(255, 119, 198, 0.2), transparent 50%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .main-title {
+            font-size: 5em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ffffff, #ffd700, #ffffff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 
+                0 0 40px rgba(255, 215, 0, 0.5),
+                0 0 80px rgba(255, 215, 0, 0.3);
+            letter-spacing: 8px;
+            position: relative;
+            z-index: 2;
+            animation: shimmer 3s linear infinite;
+            text-transform: uppercase;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        
+        .main-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+            border-radius: 2px;
+            animation: lineGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes lineGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.8); }
+            50% { box-shadow: 0 0 30px rgba(255, 215, 0, 1); }
+        }
+        
+        .subtitle {
+            font-size: 1.8em;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 15px;
+            font-weight: 300;
+            position: relative;
+            z-index: 2;
+            letter-spacing: 2px;
+        }
+        
+        .organization {
+            font-size: 1.3em;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 2;
+            letter-spacing: 1px;
+        }
+        
+        .issue-info {
+            display: inline-flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .issue-badge {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9em;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .content-wrapper {
+            max-width: 1400px;
+            margin: -50px auto 0;
+            padding: 0 20px 50px;
+            position: relative;
+            z-index: 3;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .section-title {
+            font-size: 2.5em;
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        
+        .section-subtitle {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            font-weight: 300;
+        }
+        
+        .documents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .doc-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .doc-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+        }
+        
+        .doc-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+        }
+        
+        .doc-category {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.85em;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .doc-title {
+            font-size: 1.4em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            font-weight: 700;
+        }
+        
+        .doc-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: #7f8c8d;
+        }
+        
+        .doc-date, .doc-agency {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .doc-summary {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            font-size: 0.95em;
+        }
+        
+        .doc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .doc-tag {
+            background: linear-gradient(45deg, #ecf0f1, #dfe6e9);
+            color: #2c3e50;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .doc-tag:hover {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .doc-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 12px 25px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .doc-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 50px 0 30px;
+            text-align: center;
+            margin-top: 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .footer-link:hover {
+            color: #ffd700;
+            transform: translateY(-2px);
+        }
+        
+        .copyright {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 3.5em;
+                letter-spacing: 4px;
+            }
+            
+            .subtitle {
+                font-size: 1.4em;
+            }
+            
+            .organization {
+                font-size: 1.1em;
+            }
+            
+            .hero-banner {
+                padding: 80px 0 60px;
+            }
+            
+            .documents-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+            
+            .doc-card {
+                padding: 25px;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="hero-banner">
+        <div class="content-wrapper">
+            <h1 class="main-title">数字简报</h1>
+            <p class="subtitle">辽宁省律师协会数字法治与数字经济专业委员会</p>
+            <p class="organization">Liaoning Provincial Lawyers Association</p>
+            <div class="issue-info">
+                <span class="issue-badge">📄 2025年第一期</span>
+                <span style="color: rgba(255, 255, 255, 0.8);">政策法规汇编</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-wrapper">
+        <section class="section-header">
+            <h2 class="section-title">政策法规目录</h2>
+            <p class="section-subtitle">收录数字法治与数字经济领域最新重要政策文件</p>
+        </section>
+
+        <div class="documents-grid">
+            <!-- 数据基础制度类 -->
+            <article class="doc-card">
+                <span class="doc-category">数据基础制度</span>
+                <h3 class="doc-title">公共数据资源登记管理暂行办法</h3>
+                <div class="doc-meta">
+                    <span class="doc-date">📅 2025年1月8日</span>
+                    <span class="doc-agency">🏛️ 发改数据规〔2025〕26号</span>
+                </div>
+                <p class="doc-summary">
+                    为促进公共数据资源合规高效开发利用，构建全国一体化公共数据资源登记体系，规范公共数据资源登记工作。适用于中华人民共和国境内开展公共数据资源的登记活动及其监督管理。
+                </p>
+                <div class="doc-tags">
+                    <span class="doc-tag">公共数据资源</span>
+                    <span class="doc-tag">登记管理</span>
+                    <span class="doc-tag">数据要素</span>
+                    <span class="doc-tag">数据安全</span>
+                </div>
+                <a href="公共数据资源登记管理暂行办法.html" class="doc-link">
+                    阅读全文 →
+                </a>
+            </article>
+
+            <article class="doc-card">
+                <span class="doc-category">数据基础制度</span>
+                <h3 class="doc-title">公共数据资源授权运营实施规范（试行）</h3>
+                <div class="doc-meta">
+                    <span class="doc-date">📅 2025年1月8日</span>
+                    <span class="doc-agency">🏛️ 发改数据规〔2025〕27号</span>
+                </div>
+                <p class="doc-summary">
+                    为推进公共数据资源开发利用，规范公共数据资源授权运营，促进一体化数据市场培育，释放数据要素价值。适用于在中华人民共和国境内开展公共数据资源授权运营活动。
+                </p>
+                <div class="doc-tags">
+                    <span class="doc-tag">授权运营</span>
+                    <span class="doc-tag">数据开发利用</span>
+                    <span class="doc-tag">一体化数据市场</span>
+                    <span class="doc-tag">数据治理</span>
+                </div>
+                <a href="公共数据资源授权运营实施规范（试行）.html" class="doc-link">
+                    阅读全文 →
+                </a>
+            </article>
+
+            <article class="doc-card">
+                <span class="doc-category">数据基础制度</span>
+                <h3 class="doc-title">国家发展改革委 国家数据局关于建立公共数据资源授权运营价格形成机制的通知</h3>
+                <div class="doc-meta">
+                    <span class="doc-date">📅 2025年1月</span>
+                    <span class="doc-agency">🏛️ 国家发展改革委</span>
+                </div>
+                <p class="doc-summary">
+                    建立健全公共数据资源授权运营价格形成机制，规范公共数据产品和服务定价行为，促进公共数据资源合理有效利用。
+                </p>
+                <div class="doc-tags">
+                    <span class="doc-tag">价格机制</span>
+                    <span class="doc-tag">授权运营</span>
+                    <span class="doc-tag">数据产品</span>
+                </div>
+                <a href="国家发展改革委_国家数据局关于建立公共数据资源授权运营价格形成机制的通知-html-20251205.html" class="doc-link">
+                    阅读全文 →
+                </a>
+            </article>
+
+            <!-- 数据安全治理类 -->
+            <article class="doc-card">
+                <span class="doc-category">数据安全治理</span>
+                <h3 class="doc-title">关于完善数据流通安全治理更好促进数据要素市场化价值化的实施方案</h3>
+                <div class="doc-meta">
+                    <span class="doc-date">📅 2025年1月6日</span>
+                    <span class="doc-agency">🏛️ 发改数据〔2025〕18号</span>
+                </div>
+                <p class="doc-summary">
+                    完善数据流通安全治理规则，建立健全数据流通安全治理机制，提升数据安全治理能力，促进数据要素合规高效流通利用，释放数据价值。
+                </p>
+                <div class="doc-tags">
+                    <span class="doc-tag">数据流通</span>
+                    <span class="doc-tag">安全治理</span>
+                    <span class="doc-tag">数据要素市场化</span>
+                    <span class="doc-tag">价值释放</span>
+                </div>
+                <a href="关于完善数据流通安全治理_更好促进数据要素市场化价值化的实施方案-html-20251205.html" class="doc-link">
+                    阅读全文 →
+                </a>
+            </article>
+
+            <article class="doc-card">
+                <span class="doc-category">数据安全治理</span>
+                <h3 class="doc-title">工业和信息化部办公厅关于加强互联网数据中心客户数据安全保护的通知</h3>
+                <div class="doc-meta">
+                    <span class="doc-date">📅 2025年</span>
+                    <span class="doc-agency">🏛️ 工业和信息化部</span>
+                </div>
+                <p class="doc-summary">
+                    加强互联网数据中心客户数据安全保护，规范数据中心运营者数据安全保护义务，防范数据安全风险。
+                </p>
+                <div class="doc-tags">
+                    <span class="doc-tag">数据安全</span>
+                    <span class="doc-tag">互联网数据中心</span>
+                    <span class="doc-tag">客户保护</span>
+                </div>
+                <a href="工业和信息化部办公厅关于加强互联网数据中心客户数据安全保护的通知.html" class="doc-link">
+                    阅读全文 →
+                </a>
+            </article>
+
+            <!-- 行业发展类 -->
+            <article class="doc-card">
+                <span class="doc-category">行业发展</span>
+                <h3 class="doc-title">商务部等8部门关于印发《加快数智供应链发展专项行动计划》的通知</h3>
+                <div class="doc-meta">
+                    <span class="doc-date">📅 2025年</span>
+                    <span class="doc-agency">🏛️ 商务部等8部门</span>
+                </div>
+                <p class="doc-summary">
+                    加快数智供应链发展，推动供应链数字化转型，提升产业链供应链韧性和安全水平，促进数字经济和实体经济深度融合。
+                </p>
+                <div class="doc-tags">
+                    <span class="doc-tag">数智供应链</span>
+                    <span class="doc-tag">数字化转型</span>
+                    <span class="doc-tag">产业链</span>
+                    <span class="doc-tag">数字经济</span>
+                </div>
+                <a href="商务部等8部门关于印发《加快数智供应链发展专项行动计划》的通知-html-20251205.html" class="doc-link">
+                    阅读全文 →
+                </a>
+            </article>
+
+            <article class="doc-card">
+                <span class="doc-category">行业发展</span>
+                <h3 class="doc-title">国家发展改革委等部门关于开展物流数据开放互联试点工作的通知</h3>
+                <div class="doc-meta">
+                    <span class="doc-date">📅 2025年</span>
+                    <span class="doc-agency">🏛️ 国家发展改革委等部门</span>
+                </div>
+                <p class="doc-summary">
+                    开展物流数据开放互联试点工作，推动物流数据共享利用，促进物流行业数字化转型，提升物流效率和服务水平。
+                </p>
+                <div class="doc-tags">
+                    <span class="doc-tag">物流数据</span>
+                    <span class="doc-tag">开放互联</span>
+                    <span class="doc-tag">试点工作</span>
+                    <span class="doc-tag">数字化转型</span>
+                </div>
+                <a href="国家发展改革委等部门关于开展物流数据开放互联试点工作的通知-html-20251205.html" class="doc-link">
+                    阅读全文 →
+                </a>
+            </article>
+
+            <article class="doc-card">
+                <span class="doc-category">行业发展</span>
+                <h3 class="doc-title">轻工业数字化转型实施方案</h3>
+                <div class="doc-meta">
+                    <span class="doc-date">📅 2025年</span>
+                    <span class="doc-agency">🏛️ 工业和信息化部</span>
+                </div>
+                <p class="doc-summary">
+                    推进轻工业数字化转型，加快数字技术在轻工业领域的深度应用，提升轻工业数字化、网络化、智能化发展水平。
+                </p>
+                <div class="doc-tags">
+                    <span class="doc-tag">轻工业</span>
+                    <span class="doc-tag">数字化转型</span>
+                    <span class="doc-tag">智能制造</span>
+                    <span class="doc-tag">产业升级</span>
+                </div>
+                <a href="轻工业数字化转型实施方案-html-20251205.html" class="doc-link">
+                    阅读全文 →
+                </a>
+            </article>
+
+            <!-- 监管管理类 -->
+            <article class="doc-card">
+                <span class="doc-category">监管管理</span>
+                <h3 class="doc-title">市场监管总局关于印发《网络交易合规数据报送管理暂行办法》的通知</h3>
+                <div class="doc-meta">
+                    <span class="doc-date">📅 2025年</span>
+                    <span class="doc-agency">🏛️ 市场监管总局</span>
+                </div>
+                <p class="doc-summary">
+                    规范网络交易合规数据报送管理，建立网络交易监管数据采集机制，提升网络交易监管效能，维护网络交易市场秩序。
+                </p>
+                <div class="doc-tags">
+                    <span class="doc-tag">网络交易</span>
+                    <span class="doc-tag">合规数据</span>
+                    <span class="doc-tag">数据报送</span>
+                    <span class="doc-tag">市场监管</span>
+                </div>
+                <a href="市场监管总局关于印发《网络交易合规数据报送管理暂行办法》的通知_国务院部门文件_中国政府网-html-20251205.html" class="doc-link">
+                    阅读全文 →
+                </a>
+            </article>
+
+            <article class="doc-card">
+                <span class="doc-category">监管管理</span>
+                <h3 class="doc-title">自然资源部关于规范重要地理信息数据审核公布管理工作的通知</h3>
+                <div class="doc-meta">
+                    <span class="doc-date">📅 2025年</span>
+                    <span class="doc-agency">🏛️ 自然资源部</span>
+                </div>
+                <p class="doc-summary">
+                    规范重要地理信息数据审核公布管理工作，加强地理信息数据安全管理，保障地理信息安全，促进地理信息资源合理利用。
+                </p>
+                <div class="doc-tags">
+                    <span class="doc-tag">地理信息</span>
+                    <span class="doc-tag">数据审核</span>
+                    <span class="doc-tag">信息管理</span>
+                    <span class="doc-tag">数据安全</span>
+                </div>
+                <a href="自然资源部关于规范重要地理信息数据审核公布管理工作的通知-html-20251205.html" class="doc-link">
+                    阅读全文 →
+                </a>
+            </article>
+
+            <!-- 标准规范类 -->
+            <article class="doc-card">
+                <span class="doc-category">标准规范</span>
+                <h3 class="doc-title">数据领域常用名词解释（第二批）</h3>
+                <div class="doc-meta">
+                    <span class="doc-date">📅 2025年</span>
+                    <span class="doc-agency">🏛️ 国家数据局</span>
+                </div>
+                <p class="doc-summary">
+                    统一数据领域专业术语定义，规范数据相关概念使用，为数据治理和数字经济发展提供标准化术语支撑。
+                </p>
+                <div class="doc-tags">
+                    <span class="doc-tag">名词解释</span>
+                    <span class="doc-tag">术语标准</span>
+                    <span class="doc-tag">数据治理</span>
+                    <span class="doc-tag">标准化</span>
+                </div>
+                <a href="数据领域常用名词解释（第二批）-html-20251205.html" class="doc-link">
+                    阅读全文 →
+                </a>
+            </article>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="http://www.lnlawyers.net/" target="_blank" class="footer-link">🏛️ 辽宁省律师协会官网</a>
+                <a href="https://www.gov.cn" target="_blank" class="footer-link">🇨🇳 中国政府网</a>
+                <a href="https://www.ndrc.gov.cn" target="_blank" class="footer-link">📊 国家发展改革委</a>
+                <a href="https://www.nda.gov.cn" target="_blank" class="footer-link">💾 国家数据局</a>
+            </div>
+            <p class="copyright">
+                © 2025 辽宁省律师协会数字法治与数字经济专业委员会 版权所有<br>
+                本网站内容仅供学术研究参考，不代表本会立场 | 技术支持：GitHub Pages
+            </p>
+        </div>
+    </footer>
+</body>
+</html>

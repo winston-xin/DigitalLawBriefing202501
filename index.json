@@ -1,0 +1,46 @@
+{
+  "name": "数字简报2025年第一期",
+  "version": "2.0.0",
+  "description": "辽宁省律师协会数字法治与数字经济专业委员会数字简报",
+  "homepage": "https://gitee.com/winston_xin/DigitalLawBriefing202501",
+  "repository": {
+    "type": "git",
+    "url": "https://gitee.com/winston_xin/DigitalLawBriefing202501.git"
+  },
+  "keywords": [
+    "数字法治",
+    "数字经济",
+    "政策法规",
+    "辽宁省律师协会",
+    "2025年简报"
+  ],
+  "author": "辽宁省律师协会数字法治与数字经济专业委员会",
+  "license": "MIT",
+  "scripts": {
+    "start": "python -m http.server 8080",
+    "deploy": "echo '请参考WEB_HOSTING_GUIDE.md进行部署'"
+  },
+  "documents": {
+    "data_infrastructure": [
+      "公共数据资源登记管理暂行办法",
+      "公共数据资源授权运营实施规范（试行）",
+      "建立公共数据资源授权运营价格形成机制的通知"
+    ],
+    "data_security": [
+      "完善数据流通安全治理的实施方案",
+      "加强互联网数据中心客户数据安全保护的通知"
+    ],
+    "industry_development": [
+      "加快数智供应链发展专项行动计划",
+      "开展物流数据开放互联试点工作的通知",
+      "轻工业数字化转型实施方案"
+    ],
+    "regulatory_management": [
+      "网络交易合规数据报送管理暂行办法",
+      "规范重要地理信息数据审核公布管理工作的通知"
+    ],
+    "standards": [
+      "数据领域常用名词解释（第二批）"
+    ]
+  }
+}

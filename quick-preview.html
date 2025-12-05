@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字简报 - 快速预览</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Microsoft YaHei", "SimSun", serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .preview-frame {
+            width: 100%;
+            height: 100vh;
+            border: none;
+            display: block;
+        }
+        
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            z-index: 1000;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background: rgba(255, 255, 255, 0.9);
+            color: #d32f2f;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .fallback-links {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            margin: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+        
+        .fallback-links h2 {
+            color: #2a5298;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .link-button {
+            display: block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .link-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <h2>正在加载数字简报...</h2>
+        <p>如长时间未加载，请查看下方替代方案</p>
+    </div>
+    
+    <div class="error-message" id="errorMessage">
+        <h2>⚠️ 加载失败</h2>
+        <p>iframe加载被阻止，请使用下方替代方案</p>
+    </div>
+    
+    <div class="fallback-links" id="fallbackLinks">
+        <h2>🌐 数字简报访问方式</h2>
+        
+        <h3>📱 本地预览（推荐）</h3>
+        <div class="link-button" onclick="startLocalServer()">
+            🚀 启动本地服务器预览
+        </div>
+        
+        <h3>🔗 直接访问链接</h3>
+        <a href="index.html" class="link-button" target="_blank">
+            📄 直接打开index.html
+        </a>
+        
+        <a href="https://gitee.com/winston_xin/DigitalLawBriefing202501/raw/master/index.html" class="link-button" target="_blank">
+            🔗 Gitee Raw链接
+        </a>
+        
+        <h3>🌍 获得公共网站（推荐）</h3>
+        <a href="https://netlify.com" class="link-button" target="_blank">
+            🚀 部署到Netlify（3分钟）
+        </a>
+        
+        <a href="https://vercel.com" class="link-button" target="_blank">
+            ⚡ 部署到Vercel（3分钟）
+        </a>
+        
+        <h3>📋 使用说明</h3>
+        <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin-top: 10px;">
+            <p><strong>本地服务器：</strong></p>
+            <code>python -m http.server 8080</code>
+            <p>然后访问：<code>http://localhost:8080</code></p>
+            
+            <p style="margin-top: 10px;"><strong>最佳体验：</strong></p>
+            <p>使用Netlify或Vercel部署，获得专业网站地址和移动端完美体验！</p>
+        </div>
+    </div>
+
+    <script>
+        function showFallback() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('fallbackLinks').style.display = 'block';
+        }
+        
+        function showError() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('fallbackLinks').style.display = 'block';
+        }
+        
+        function startLocalServer() {
+            alert('请在命令行中运行：\n\npython -m http.server 8080\n\n然后在浏览器访问：\nhttp://localhost:8080\n\n或双击项目中的 access-help.bat 文件获得帮助');
+        }
+        
+        // 尝试加载iframe（通常会被阻止）
+        setTimeout(function() {
+            try {
+                showFallback();
+            } catch (e) {
+                showError();
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

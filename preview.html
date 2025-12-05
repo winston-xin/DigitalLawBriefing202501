@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数字简报预览助手</title>
+    <style>
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .preview-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+        .title {
+            font-size: 2.5em;
+            color: #2a5298;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .link-container {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px dashed #667eea;
+        }
+        .link-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            margin: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .link-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        .instructions {
+            text-align: left;
+            margin: 20px 0;
+            color: #555;
+        }
+        .instructions h3 {
+            color: #2a5298;
+            margin-top: 15px;
+        }
+        .copy-button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .copy-button:hover {
+            background: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="preview-container">
+        <h1 class="title">🌐 数字简报预览助手</h1>
+        
+        <div class="link-container">
+            <h3>🎯 直接预览数字简报</h3>
+            <p>点击下方链接立即查看您的数字法治简报：</p>
+            <a href="index.html" class="link-button" target="_blank">
+                📱 在线预览数字简报
+            </a>
+            <br>
+            <a href="https://gitee.com/winston_xin/DigitalLawBriefing202501/raw/master/index.html" class="link-button" target="_blank">
+                🔗 Gitee Raw预览
+            </a>
+        </div>
+
+        <div class="instructions">
+            <h3>📋 其他访问方式：</h3>
+            <p><strong>1. 本地服务器：</strong></p>
+            <code>python -m http.server 8080</code>
+            <button class="copy-button" onclick="copyToClipboard('python -m http.server 8080')">📋 复制</button>
+            <p>然后访问：<code>http://localhost:8080</code></p>
+            
+            <p><strong>2. 直接打开文件：</strong></p>
+            <p>双击项目中的 <code>index.html</code> 文件</p>
+            
+            <p><strong>3. 部署到Netlify（推荐）：</strong></p>
+            <p>访问 <a href="https://netlify.com" target="_blank">netlify.com</a> 一键部署获得永久链接</p>
+        </div>
+
+        <div class="link-container">
+            <h3>🌟 项目特色</h3>
+            <p>✨ 渐变视觉设计 | 📱 完美响应式 | 📚 11篇政策法规 | 🔍 智能分类</p>
+        </div>
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                alert('已复制到剪贴板：' + text);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gitee HTML预览器 - 数字简报</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: "Microsoft YaHei", "SimSun", serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .title {
+            font-size: 2.5em;
+            color: #2a5298;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        
+        .viewer-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .file-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .file-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .file-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+        
+        .file-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .file-card:hover::before {
+            left: 100%;
+        }
+        
+        .file-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #2a5298;
+            margin-bottom: 10px;
+        }
+        
+        .file-type {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            margin-bottom: 10px;
+        }
+        
+        .preview-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .preview-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .iframe-container.active {
+            display: block;
+        }
+        
+        .preview-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .close-preview {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #d32f2f;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 20px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .close-preview:hover {
+            background: #b71c1c;
+            transform: scale(1.1);
+        }
+        
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .instructions h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .instructions p {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .method-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .method-tab {
+            background: none;
+            border: none;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-size: 1em;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .method-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            font-weight: bold;
+        }
+        
+        .method-content {
+            display: none;
+        }
+        
+        .method-content.active {
+            display: block;
+        }
+        
+        .step {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">🌐 Gitee HTML预览器</h1>
+            <p class="subtitle">解决Gitee平台上HTML文件只能显示代码的问题</p>
+        </div>
+        
+        <div class="instructions">
+            <h3>⚠️ Gitee平台限制说明</h3>
+            <p>Gitee出于安全考虑，会阻止HTML文件的直接渲染，只能显示源代码。本页面提供了多种解决方案。</p>
+        </div>
+        
+        <div class="viewer-section">
+            <div class="method-tabs">
+                <button class="method-tab active" onclick="switchMethod('preview')">📱 文件预览</button>
+                <button class="method-tab" onclick="switchMethod('manual')">🔧 手动方法</button>
+                <button class="method-tab" onclick="switchMethod('deploy')">🚀 部署方案</button>
+            </div>
+            
+            <div id="preview-method" class="method-content active">
+                <h2>📄 数字简报文件列表</h2>
+                <p>点击下方文件查看预览效果：</p>
+                
+                <div class="file-list">
+                    <div class="file-card">
+                        <div class="file-type">主页</div>
+                        <div class="file-title">index.html</div>
+                        <div class="file-title">数字简报主页</div>
+                        <button class="preview-btn" onclick="previewFile('index.html')">
+                            🌐 预览主页
+                        </button>
+                    </div>
+                    
+                    <div class="file-card">
+                        <div class="file-type">政策文档</div>
+                        <div class="file-title">公共数据资源登记管理暂行办法</div>
+                        <button class="preview-btn" onclick="previewFile('公共数据资源登记管理暂行办法.html')">
+                            📖 预览文档
+                        </button>
+                    </div>
+                    
+                    <div class="file-card">
+                        <div class="file-type">政策文档</div>
+                        <div class="file-title">公共数据资源授权运营实施规范</div>
+                        <button class="preview-btn" onclick="previewFile('公共数据资源授权运营实施规范（试行）.html')">
+                            📖 预览文档
+                        </button>
+                    </div>
+                    
+                    <div class="file-card">
+                        <div class="file-type">政策文档</div>
+                        <div class="file-title">完善数据流通安全治理实施方案</div>
+                        <button class="preview-btn" onclick="previewFile('关于完善数据流通安全治理_更好促进数据要素市场化价值化的实施方案-html-20251205.html')">
+                            📖 预览文档
+                        </button>
+                    </div>
+                    
+                    <div class="file-card">
+                        <div class="file-type">政策文档</div>
+                        <div class="file-title">加快数智供应链发展专项行动计划</div>
+                        <button class="preview-btn" onclick="previewFile('商务部等8部门关于印发《加快数智供应链发展专项行动计划》的通知-html-20251205.html')">
+                            📖 预览文档
+                        </button>
+                    </div>
+                    
+                    <div class="file-card">
+                        <div class="file-type">政策文档</div>
+                        <div class="file-title">轻工业数字化转型实施方案</div>
+                        <button class="preview-btn" onclick="previewFile('轻工业数字化转型实施方案-html-20251205.html')">
+                            📖 预览文档
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="manual-method" class="method-content">
+                <h2>🔧 手动预览方法</h2>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>本地服务器预览（推荐）</strong>
+                    <p>在项目目录运行：<br><code>python -m http.server 8080</code><br>然后访问：<code>http://localhost:8080</code></p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>直接打开文件</strong>
+                    <p>双击项目中的HTML文件，在浏览器中直接打开</p>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>使用Gitee Raw链接</strong>
+                    <p>复制Raw链接到新标签页：<br><code>https://gitee.com/winston_xin/DigitalLawBriefing202501/raw/master/文件名</code></p>
+                </div>
+            </div>
+            
+            <div id="deploy-method" class="method-content">
+                <h2>🚀 获得公共网站</h2>
+                
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Netlify部署（3分钟）</strong>
+                    <p>访问 <a href="https://netlify.com" target="_blank">netlify.com</a>，连接Gitee仓库，一键部署</p>
+                    <button class="preview-btn" onclick="window.open('https://netlify.com', '_blank')">
+                        🚀 立即部署到Netlify
+                    </button>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Vercel部署（3分钟）</strong>
+                    <p>访问 <a href="https://vercel.com" target="_blank">vercel.com</a>，导入Gitee仓库，自动部署</p>
+                    <button class="preview-btn" onclick="window.open('https://vercel.com', '_blank')">
+                        ⚡ 立即部署到Vercel
+                    </button>
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>GitHub Pages（需要网络）</strong>
+                    <p>如果GitHub网络正常，可以推送到GitHub并启用Pages服务</p>
+                </div>
+            </div>
+            
+            <div class="iframe-container" id="previewContainer">
+                <button class="close-preview" onclick="closePreview()">×</button>
+                <iframe class="preview-frame" id="previewFrame"></iframe>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function switchMethod(method) {
+            // 切换标签页
+            document.querySelectorAll('.method-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.method-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+            document.getElementById(method + '-method').classList.add('active');
+        }
+        
+        function previewFile(filename) {
+            const baseUrl = 'https://gitee.com/winston_xin/DigitalLawBriefing202501/raw/master/';
+            const fileUrl = baseUrl + filename;
+            
+            const container = document.getElementById('previewContainer');
+            const frame = document.getElementById('previewFrame');
+            
+            frame.src = fileUrl;
+            container.classList.add('active');
+            
+            // 滚动到预览区域
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function closePreview() {
+            const container = document.getElementById('previewContainer');
+            const frame = document.getElementById('previewFrame');
+            
+            container.classList.remove('active');
+            frame.src = '';
+        }
+    </script>
+</body>
+</html>
